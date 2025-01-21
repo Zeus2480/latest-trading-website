@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import CompareComp from "@/components/CompareComp";
 import CardSample from "@/components/CardSample";
 import Dashboard from "@/components/Dashboard";
+import DiscordSection from "@/components/DiscordSection";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
       </div>
 
       <Dashboard />
+      <DiscordSection/>
       {/* <CardSample /> */}
       {/* <CardGridSection /> */}
       {/* <MarqueeSlider /> */}

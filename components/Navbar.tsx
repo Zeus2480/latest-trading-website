@@ -40,7 +40,7 @@ const Navbar = () => {
               Features
             </a>
             <a
-              href="#testimonials"
+              href="#results"
               className="text-white hover:text-gray-300 font-semibold  transition-colors"
             >
               Results
@@ -137,7 +137,7 @@ const Navbar = () => {
               Features
             </a>
             <a
-              href="#testimonials"
+              href="#results"
               className="text-white hover:text-gray-300 transition-colors"
             >
               Results

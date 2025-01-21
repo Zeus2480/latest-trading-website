@@ -63,10 +63,28 @@ const Pricing: React.FC = () => {
 
   const formatPrice = (price: number): string => `$${price.toFixed(2)}`;
 
-  const getDisplayPrice = (tier: Tier): { price: string; period: string } =>
-    billingType === "annual"
-      ? { price: formatPrice(tier.yearlyPrice), period: "per year" }
-      : { price: formatPrice(tier.monthlyPrice), period: "per month" };
+  const getDisplayPrice = (
+    tier: Tier
+  ): {
+    price: string;
+    period: string;
+    yearlyTotal?: string;
+    monthlyOriginal?: string;
+  } => {
+    if (billingType === "annual") {
+      const monthlyDiscounted = tier.yearlyPrice / 12;
+      return {
+        price: formatPrice(monthlyDiscounted),
+        period: "per month",
+        yearlyTotal: formatPrice(tier.yearlyPrice),
+        monthlyOriginal: formatPrice(tier.monthlyPrice),
+      };
+    }
+    return {
+      price: formatPrice(tier.monthlyPrice),
+      period: "per month",
+    };
+  };
 
   const handlePurchase = (tier: Tier): void => {
     const link = billingType === "annual" ? tier.yearlyLink : tier.monthlyLink;
@@ -113,9 +131,9 @@ const Pricing: React.FC = () => {
               }`}
             >
               Annual
-              <span className="ml-2 bg-black text-white text-xs px-2 py-0.5 rounded">
+              {/* <span className="ml-2 bg-black text-white text-xs px-2 py-0.5 rounded">
                 Save up to 70%
-              </span>
+              </span> */}
             </button>
           </div>
         </div>
@@ -123,78 +141,133 @@ const Pricing: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-8 w-full">
           {tiers.map((tier) => (
             <div
+              className={`${
+                tier.name === "Titans Algo Pro+" && billingType === "annual"
+                  ? "bg-gradient-to-r from-[#8C93FE] via-[#9D9BFD] to-[#C5AAFE] pt-5 pb-1 px-1 rounded-3xl"
+                  : "mt-[68px]"
+              }`}
               key={tier.name}
-              className="flex flex-col rounded-3xl bg-white/5 p-8 ring-1 ring-white/10 hover:ring-white/30 transition-all duration-300"
             >
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white rounded-full" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">
-                  {tier.name}
-                </h3>
-              </div>
-
-              <div className="mt-6">
-                <p className="text-4xl font-bold text-white">
-                  {getDisplayPrice(tier).price}
+              {tier.name === "Titans Algo Pro+" && billingType === "annual" && (
+                <p className="mb-5 text-center text-white font-semibold text-lg">
+                  <span className="text-xl">✨ </span>
+                  Best Deal
+                  <span className="text-xl font-bold">⤵</span>
                 </p>
-                <p className="text-sm text-gray-400">
-                  {getDisplayPrice(tier).period}
-                </p>
-                {billingType === "annual" && (
-                  <p className="mt-2 text-sm text-gray-300">
-                    Save {tier.yearlyDiscount}% with annual billing
-                  </p>
-                )}
-              </div>
-
-              <p className="mt-6 text-gray-300">{tier.description}</p>
-              <button
-                onClick={() => handlePurchase(tier)}
-                className="mt-8 w-full rounded-lg bg-white py-2 text-black hover:bg-gray-100 transition-colors"
+              )}
+              <div
+                key={tier.name}
+                className={`flex flex-col rounded-3xl p-8 ${
+                  tier.name === "Titans Algo Pro+" 
+                    ? "bg-[#11141a] ring- ring-purple-500/50  bg-gradient-to-b from-purple-500/10 to-transparent"
+                    : "bg-white/5 ring-1 ring-white/10"
+                } hover:ring-white/30 transition-all duration-300`}
               >
-                Get Started
-              </button>
-              <ul className="mt-8 space-y-3">
-                {tier.features.map(({ text, status }) => (
-                  <li
-                    key={text}
-                    className="flex items-center gap-2 text-gray-300"
-                  >
-                    {status ? (
-                      <svg
-                        className="h-5 w-5 text-green-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
+                    {tier.name === "Titans Algo Pro+" ? (
+                      // Diamond shape
+                      <div className="w-3 h-3 bg-white transform rotate-45" />
                     ) : (
-                      <svg
-                        className="h-5 w-5 text-red-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
+                      // Circle shape
+                      <div className="w-3 h-3 bg-white rounded-full" />
                     )}
-                    {text}
-                  </li>
-                ))}
-              </ul>
+                  </div>
+
+                  <h3 className="text-xl font-semibold text-white">
+                    {tier.name}
+                  </h3>
+                  {tier.name === "Titans Algo Pro+" &&
+                    billingType === "annual" && (
+                      <span className="hidden md:block float-right ml-2 px-3 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full">
+                        Save {tier.yearlyDiscount}%
+                      </span>
+                    )}
+                </div>
+                {tier.name === "Titans Algo Pro+" &&
+                  billingType === "annual" && (
+                    <p className=" md:hidden w-min whitespace-nowrap mt-4 px-3 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full">
+                      Save {tier.yearlyDiscount}%
+                    </p>
+                  )}
+                <div className="mt-6">
+                  <p className="text-4xl font-bold text-white flex items-baseline">
+                    {getDisplayPrice(tier).price}
+                    <span className="text-sm text-gray-400 ml-2">
+                      {getDisplayPrice(tier).period}
+                    </span>
+                  </p>
+                  {billingType === "annual" && (
+                    <>
+                      <p className="text-sm text-gray-400 mt-1">
+                        <span className="line-through">
+                          {getDisplayPrice(tier).monthlyOriginal}
+                        </span>{" "}
+                        per month
+                      </p>
+                      <p className="text-sm text-gray-400 mt-1">
+                        {getDisplayPrice(tier).yearlyTotal} billed annually
+                      </p>
+                    </>
+                  )}
+                </div>
+
+                <p className="mt-6 text-gray-300">{tier.description}</p>
+                <button
+                  onClick={() => handlePurchase(tier)}
+                  className={`mt-8 w-full rounded-lg py-2 transition-all duration-500 ease-in-out ${
+                    tier.name === "Titans Algo Pro+"
+                      ? "bg-gradient-to-r from-[#8C93FE] via-[#9D9BFD] to-[#C5AAFE] text-white hover:opacity-80"
+                      : "bg-white text-black hover:bg-gray-100"
+                  }`}
+                >
+                  Get Started
+                </button>
+
+                <ul className="mt-8 space-y-3">
+                  {tier.features.map(({ text, status }) => (
+                    <li
+                      key={text}
+                      className="flex items-center gap-2 text-gray-300"
+                    >
+                      {status ? (
+                        <svg
+                          className={`h-5 w-5 ${
+                            tier.name === "Titans Algo Pro+"
+                              ? "text-purple-400"
+                              : "text-green-400"
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="h-5 w-5 text-red-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      )}
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
