@@ -1,19 +1,21 @@
 "use client";
 
 import React from "react";
-import WidgetBot from '@widgetbot/react-embed';
 
 const DiscordSection = () => {
-    // const handleAPI = (api: Client) => {
-    //   // Hide elements after the API is ready
-    //   api.on('ready', () => {
-    //     // Log when the widget is ready
-    //     console.log('Widget is ready');
-    //   });
-    // };
+  // const handleAPI = (api: Client) => {
+  //   // Hide elements after the API is ready
+  //   api.on('ready', () => {
+  //     // Log when the widget is ready
+  //     console.log('Widget is ready');
+  //   });
+  // };
 
   return (
-    <div id="results" className="relative isolate bg-[#11141a] min-h-screen py-24 sm:py-32">
+    <div
+      id="results"
+      className="relative isolate bg-[#11141a] min-h-screen py-24 sm:py-32"
+    >
       {/* Gradient effect */}
       <div
         aria-hidden="true"
@@ -44,7 +46,13 @@ const DiscordSection = () => {
 
         {/* Discord Embed */}
         <div className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
-          <WidgetBot
+          <iframe
+            src="https://e.widgetbot.io/channels/1331294579693195455/1331294703056064605"
+            allow="clipboard-write; fullscreen"
+            height="600"
+            width="100%"
+          ></iframe>
+          {/* <WidgetBot
             server="1331294579693195455"
             channel="1331294703056064605"
             className="rounded-lg"
@@ -60,7 +68,7 @@ const DiscordSection = () => {
               borderRadius: "8px",
               border: "none",
             }}
-          />
+          /> */}
         </div>
 
         {/* Join Button */}
