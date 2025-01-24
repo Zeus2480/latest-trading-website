@@ -19,16 +19,18 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 z-50 w-full transition-all bg-[#11141a]/20 backdrop-blur-md duration-300">
+    <nav
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        hasScrolled || isOpen
+          ? "bg-[#11141a]/20 backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-screen-2xl mx-auto px-4 py-4 lg:px-10 lg:py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <a href="#" className="text-white">
-            <img
-              className="h-12 md:h-16"
-              src="/titansalgo_Logo.PNG"
-              alt="Logo"
-            />
+            <img className="h-10 md:h-12" src="/TitanLogoo.PNG" alt="Logo" />
           </a>
 
           {/* Desktop Navigation */}

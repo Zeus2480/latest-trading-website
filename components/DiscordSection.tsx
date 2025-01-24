@@ -46,6 +46,7 @@ const DiscordSection = () => {
 
         {/* Discord Embed */}
         <div className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
+        
           <iframe
             src="https://e.widgetbot.io/channels/1331294579693195455/1331294703056064605"
             allow="clipboard-write; fullscreen"
