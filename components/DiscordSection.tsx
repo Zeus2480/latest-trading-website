@@ -34,13 +34,13 @@ const DiscordSection = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-base font-semibold text-gray-300">Community</h2>
+          <h2 className="text-base font-semibold text-gray-300">Results</h2>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Join our Trading Community
+            See Real Profits in Action
           </p>
           <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-            Connect with fellow traders, share strategies, and get real-time
-            market insights from our expert community.
+            Join our Discord results channel to witness the power of Titans Algo
+            in real time.
           </p>
         </div>
 
